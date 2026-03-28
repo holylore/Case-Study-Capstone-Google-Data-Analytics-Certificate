@@ -47,5 +47,3 @@ The visual analysis was created in **Tableau Public** to show the board the disp
 
 ## Project Links
 * **Interactive Dashboard:** [(https://public.tableau.com/views/CaseStudy_Google/BeaviourDifference?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)]
-* **SQL Queries:** [[Uploading CYCLISTIC CASE STUDY Data Analysis.sql…]()
-]
