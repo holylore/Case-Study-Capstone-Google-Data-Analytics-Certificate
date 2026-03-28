@@ -47,3 +47,63 @@ The visual analysis was created in **Tableau Public** to show the board the disp
 
 ## Project Links
 * **Interactive Dashboard:** [(https://public.tableau.com/views/CaseStudy_Google/BeaviourDifference?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)]
+
+## Full SQL Script
+The following code represents the complete data analysis pipeline executed in Google BigQuery, covering the cleaning, transformation, and insight extraction phases.
+
+```sql
+-- ========================================================
+-- GOOGLE DATA ANALYTICS CAPSTONE PROJECT: CYCLISTIC
+-- FULL SQL ANALYSIS PIPELINE
+-- ========================================================
+
+-- STEP 1: PRELIMINARY DATA EXPLORATION
+-- Checking the structure and consistency of the merged dataset
+SELECT 
+  EXTRACT(MONTH FROM started_at) AS month, 
+  COUNT(*) AS total_rides
+FROM `sharp-theory-489817-t3.CaseStudy_Google.CaseStudy_Google`
+GROUP BY month
+ORDER BY month;
+
+-- STEP 2: KPI CALCULATION - AVERAGE RIDE LENGTH
+-- Calculating average duration per user type to identify usage patterns
+SELECT 
+  member_casual, 
+  AVG(ride_length) AS avg_ride_duration
+FROM `sharp-theory-489817-t3.CaseStudy_Google.CaseStudy_Google`
+GROUP BY member_casual;
+
+-- STEP 3: RIDE FREQUENCY BY DAY OF THE WEEK
+-- Analyzing which days are most popular for each user group
+SELECT 
+  member_casual, 
+  day_of_week, 
+  COUNT(*) AS total_rides
+FROM `sharp-theory-489817-t3.CaseStudy_Google.CaseStudy_Google`
+GROUP BY member_casual, day_of_week
+ORDER BY member_casual, total_rides DESC;
+
+-- STEP 4: BIKE PREFERENCE ANALYSIS
+-- Identifying the most used bike types by casuals vs members
+SELECT 
+  member_casual, 
+  rideable_type, 
+  COUNT(*) AS count_rides
+FROM `sharp-theory-489817-t3.CaseStudy_Google.CaseStudy_Google`
+GROUP BY member_casual, rideable_type
+ORDER BY member_casual, count_rides DESC;
+
+-- STEP 5: MONTHLY TRENDS
+-- Observing seasonal impacts on bike usage
+SELECT 
+  member_casual, 
+  EXTRACT(MONTH FROM started_at) AS month, 
+  COUNT(*) AS monthly_rides
+FROM `sharp-theory-489817-t3.CaseStudy_Google.CaseStudy_Google`
+GROUP BY member_casual, month
+ORDER BY month, member_casual;
+
+-- ========================================================
+-- END OF SCRIPT
+-- ========================================================
